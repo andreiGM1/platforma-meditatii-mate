@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OmnivoMath™ — Platformă Interactivă de Meditații Matematică & IT</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- App Header -->
+  <header class="app-header">
+    <div class="container header-content">
+      <div class="brand">
+        <span class="brand-badge">📐 PLATFORMĂ DE MEDITAȚII & MENTORAT</span>
+        <h1>Omnivo<span class="gold-gradient">Math™</span></h1>
+        <p class="subtitle">Platformă de învățare adaptată: de la examene de clasa a 5-a, până la calcul mental de business și fundamente IT.</p>
+      </div>
+      
+      <!-- Student Profile Selector -->
+      <div class="student-selector-box">
+        <label for="studentSelect">Selectează Elevul / Sesiunea Activă:</label>
+        <select id="studentSelect" class="student-dropdown">
+          <option value="anne" selected>🎒 Anne Stenopol — Clasa 4 ➔ 5 (Metoda Grafică & Aritmetică)</option>
+          <option value="alex_ceo">💼 Alex CEO — Business Math & Calcul Mental Rapid (2h)</option>
+          <option value="marius_dami">💻 Marius & Dami — Fundamente IT, Logică & Job Prep</option>
+        </select>
+      </div>
+    </div>
+  </header>
+
+  <main class="container main-layout">
+    
+    <!-- Top Stats Row -->
+    <section class="stats-row">
+      <div class="stat-card">
+        <span class="stat-label">Profil Curent</span>
+        <strong class="stat-val" id="statStudentName">Anne Stenopol</strong>
+        <span class="stat-sub" id="statCurriculum">Pregătire Examen Gimnaziu</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">Ritm / Durată Ședință</span>
+        <strong class="stat-val" id="statPace">90 minute</strong>
+        <span class="stat-sub" id="statPricing">Tarif adaptat voluntariat</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">Scor Exerciții Azi</span>
+        <strong class="stat-val text-green" id="statScore">0 / 0</strong>
+        <span class="stat-sub" id="statAccuracy">Acuratețe răspunsuri: 100%</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">Progres Capitol</span>
+        <strong class="stat-val text-gold" id="statProgress">Capitolul 3</strong>
+        <span class="stat-sub" id="statTopic">Metoda Segmentelor</span>
+      </div>
+    </section>
+
+    <!-- Main Workspace (Split View: Problem + Whiteboard) -->
+    <div class="workspace-grid">
+      
+      <!-- Left: Interactive Problems & Generator -->
+      <div class="card problem-card">
+        <div class="card-header">
+          <div>
+            <span class="badge" id="problemTopicBadge">METODA SEGMENTELOR</span>
+            <h3 id="problemTitle" style="margin-top: 6px;">Problema Activă #1</h3>
+          </div>
+          <button id="btnNewProblem" class="btn btn-outline btn-sm">🎲 Generează Problemă Nouă</button>
+        </div>
+
+        <div class="problem-body">
+          <p class="problem-text" id="problemStatement">
+            Suma a două numere este 48, iar unul dintre numere este de 3 ori mai mare decât celălalt. Află cele două numere folosind metoda grafică.
+          </p>
+
+          <!-- Interactive Visual Segment Canvas / Diagram -->
+          <div class="visual-diagram-box" id="visualDiagramBox">
+            <div class="diagram-title">Visual Hint / Reprezentare Grafică:</div>
+            <div id="segmentVisualizer" class="segment-visualizer">
+              <div class="segment-row">
+                <span>Numărul mic (1 segment):</span>
+                <div class="segment-bar one">x</div>
+              </div>
+              <div class="segment-row">
+                <span>Numărul mare (3 segmente):</span>
+                <div class="segment-bar three">
+                  <div class="sub-seg">x</div>
+                  <div class="sub-seg">x</div>
+                  <div class="sub-seg">x</div>
+                </div>
+              </div>
+              <div class="diagram-sum">Total = 4 segmente egale = 48</div>
+            </div>
+          </div>
+
+          <!-- Answer Submission Form -->
+          <form id="answerForm" class="answer-box">
+            <div class="answer-inputs" id="answerInputsContainer">
+              <div class="input-group">
+                <label for="inputA" id="labelInputA">Numărul mic (a):</label>
+                <input type="number" id="inputA" placeholder="Ex: 12" required>
+              </div>
+              <div class="input-group">
+                <label for="inputB" id="labelInputB">Numărul mare (b):</label>
+                <input type="number" id="inputB" placeholder="Ex: 36" required>
+              </div>
+            </div>
+
+            <div class="answer-actions">
+              <button type="submit" class="btn btn-primary" id="btnCheckAnswer">✓ Verifică Rezolvarea</button>
+              <button type="button" id="btnShowStepByStep" class="btn btn-outline">💡 Vezi Explicația Pas cu Pas</button>
+            </div>
+          </form>
+
+          <!-- Feedback Toast / Alert -->
+          <div id="feedbackAlert" class="feedback-alert" style="display: none;"></div>
+
+          <!-- Step-by-Step Explanation Accordion -->
+          <div id="explanationBox" class="explanation-box" style="display: none;">
+            <h4>📖 Explicație Metodică Pas cu Pas:</h4>
+            <ol id="explanationSteps">
+              <li>Reprezentăm numărul mic printr-un segment de lungime 1.</li>
+              <li>Numărul mare este de 3 ori mai mare, deci are 3 segmente egale.</li>
+              <li>Suma totală este formată din 1 + 3 = 4 segmente egale.</li>
+              <li>Aflăm valoarea unui segment: 48 ÷ 4 = 12 (numărul mic).</li>
+              <li>Aflăm numărul mare: 12 × 3 = 36.</li>
+              <li>Verificare: 12 + 36 = 48. Corect!</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Virtual Scratchpad & Whiteboard Canvas -->
+      <div class="card canvas-card">
+        <div class="card-header">
+          <div>
+            <h3>📝 Tablă Virtuală de Calcule</h3>
+            <span class="text-muted" style="font-size: 0.78rem;">Stylus, mouse sau touch pe tabletă</span>
+          </div>
+          <div class="canvas-tools">
+            <button id="btnClearCanvas" class="btn btn-sm btn-outline">🗑️ Șterge Tot</button>
+            <input type="color" id="canvasColorPicker" value="#d4af37" title="Alege culoarea creionului">
+          </div>
+        </div>
+
+        <div class="canvas-wrapper">
+          <canvas id="whiteboardCanvas" width="600" height="420"></canvas>
+        </div>
+
+        <div class="canvas-footer">
+          <span>💡 Trasează calcule intermediare, segmente sau formule.</span>
+          <button id="btnSaveNotes" class="btn btn-sm btn-gold">📥 Export Fișă PDF</button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Student Session Tracker & Homework Section -->
+    <section class="card session-log-card">
+      <div class="card-header">
+        <h3>📋 Jurnal de Ședințe & Teme pentru Acasă</h3>
+        <button id="btnAddSessionLog" class="btn btn-outline btn-sm">+ Înregistrează Ședință Nouă</button>
+      </div>
+
+      <div class="table-responsive">
+        <table class="session-table">
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Elev</th>
+              <th>Teme Acoperite</th>
+              <th>Status Înțelegere</th>
+              <th>Temă Recomandată</th>
+              <th>Observații Pedagogice</th>
+            </tr>
+          </thead>
+          <tbody id="sessionLogBody">
+            <!-- Dynamically populated -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="app-footer">
+    <div class="container text-center">
+      <p>&copy; 2026 OmnivoMath™ & Omnivoweb. Pedagogie modernă prin tehnologie interactivă.</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
